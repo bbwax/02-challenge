@@ -23,24 +23,21 @@ var number = "0123456789";
 // Write password to the #password input
 function writePassword() {
   //Create password prompts
-  var lengthPrompt = prompt ("Select password length between 8 and 128 characters");
-  var uppercasePrompt = prompt ("Include uppercase letters? Type yes or no.");
-  var lowercasePrompt = prompt ("Include lowercase letters? Type yes or no.");
-  var specialPrompt = prompt ("Include Special Characters? Type yes or no.");
-  var numberPrompt = prompt ("Include numbers? Type yes or no.");
+  var lengthPrompt = prompt("Select password length between 8 and 128 characters");
+  var uppercasePrompt = confirm("Include uppercase letters?");
+  var lowercasePrompt = confirm("Include lowercase letters?");
+  var specialPrompt = confirm("Include Special Characters?");
+  var numberPrompt = confirm("Include numbers?");
 
-  var upperBool = uppercasePrompt.toLowerCase() == "yes";
-  var lowerBool = lowercasePrompt.toLowerCase() == "yes";
-  var specialBool = specialPrompt.toLowerCase() == "yes";
-  var numberBool = numberPrompt.toLowerCase() == "yes";
+
   var lengthNumber = +lengthPrompt;
 
 
 
-  var password = generatePassword(lengthNumber,upperBool,lowerBool,numberBool, specialBool);
+  var password = generatePassword(lengthNumber, uppercasePrompt, lowercasePrompt, specialPrompt, numberPrompt);
 
   var passwordText = document.querySelector("#password");
-  
+
 
   passwordText.value = password;
 
@@ -50,25 +47,34 @@ function writePassword() {
 }
 
 //Generate Password
-function generatePassword(lengthNumber,upperBool,lowerBool,numberBool, specialBool){
- var finalPassword = []; 
+function generatePassword(lengthNumber, uppercasePrompt, lowercasePrompt, specialPrompt, numberPrompt) {
+  var characters = [];
+  var finalPassword = [];
  
-  for (i = 0; i < lengthNumber; i++ ) {
-    if (upperBool) {
-      finalPassword.push (uppercase[Math.floor(math.random()*uppercase.length)])
-     };
-    if (lowerBool) {
-      finalPassword.push (lowercase[Math.floor(math.random()*lowercase.length)])
-     };
-    if (specialBool) {
-      finalPassword.push (special[Math.floor(math.random()*special.length)])
-     };
-    if (numberBool) {
-      finalPassword.push (special[Math.floor(math.random()*special.length)])
-     };
-    else ();
-    
+//populate characters array with values from prompts
+  if (uppercasePrompt) {
+    characters.push(...uppercase)
+  };
+  if (lowercasePrompt) {
+    characters.push(...lowercase)
+  }
+  if (specialPrompt) {
+    characters.push(...special)
+  };
+  if (numberPrompt) {
+    characters.push(...special)
+  }
+// populate final password with desired length
+  for (i = 0; i < lengthNumber; i++) {
 
+    var random = Math.floor(Math.random() * characters.length - 1)
+    finalPassword.push(characters[random])
+
+
+  }
+//return final password and remove commas from array
+  console.log(finalPassword.join(""));
+  return finalPassword.join("");
 }
 
 // Add event listener to generate button
